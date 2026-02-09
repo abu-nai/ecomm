@@ -101,26 +101,30 @@ class UsersRepository {
     }
 }
 
-const test = async () => {
-    const repo = new UsersRepository('users.json');
+// export an instance of the class UsersRepository('nameofrepositorywewillsavedatato')
+// whenever we import something from this file, we will receive an instance of UsersRepository that we can start calling methods on immediately
+module.exports = new UsersRepository('users.json');
 
-    // // test to create user
-    // await repo.create({ email: 'test@test.com', password: 'password' });
-    // const users = await repo.getAll();
-    // console.log(users);
+// const test = async () => {
+//     const repo = new UsersRepository('users.json');
 
-    // // test to find user w/ id
-    // const user = await repo.getOne('3b7d2ba0');
-    // console.log(user)
+//     // // test to create user
+//     // await repo.create({ email: 'test@test.com', password: 'password' });
+//     // const users = await repo.getAll();
+//     // console.log(users);
 
-    // // test to delete user
-    // await repo.delete('b2ff5b0b');
+//     // // test to find user w/ id
+//     // const user = await repo.getOne('3b7d2ba0');
+//     // console.log(user)
 
-    // // test to update user info
-    // await repo.update('179b01bd', { lastLogin: 'February 6th, 2026'});
+//     // // test to delete user
+//     // await repo.delete('b2ff5b0b');
 
-    const user = await repo.getOneBy({ lastLogin: 'February 6th, 2026' });
-    console.log(user);
-};
+//     // // test to update user info
+//     // await repo.update('179b01bd', { lastLogin: 'February 6th, 2026'});
 
-test();
+//     const user = await repo.getOneBy({ lastLogin: 'February 6th, 2026' });
+//     console.log(user);
+// };
+
+// test();

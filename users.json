@@ -1,0 +1,7 @@
+[
+    {
+        "email": "test@test.com",
+        "password": "puppy",
+        "passwordConfirmation": "puppy"
+    }
+]

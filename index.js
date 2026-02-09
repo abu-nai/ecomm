@@ -1,5 +1,6 @@
 const express = require('express');
 const bodyParser = require('body-parser');
+const usersRepo = require('./repositories/users')
 
 // app is an object that describes all of the things that the web server can do
 const app = express();
@@ -20,8 +21,20 @@ app.get('/', (req, res) => {
         `);
 });
 
-app.post('/', (req, res) => {
-    console.log(req.body);
+app.post('/', async (req, res) => {
+    // destructure info from req.body into variables
+    const { email, password, passwordConfirmation } = req.body;
+
+    const existingUser = await usersRepo.getOneBy({ email });
+
+    if (existingUser) {
+        return res.send('Email in use');
+    }
+
+    if (password !== passwordConfirmation) {
+        return res.send('Passwords must match');
+    }
+
     res.send('Account created!!!');
 });
 
