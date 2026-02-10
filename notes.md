@@ -173,3 +173,15 @@ Authentication
         adds on 'req.session' property to our req object
             req.session is an object that we can add properties to
             whenever we call res.send, cookieSession library will look at req.session object for any info changed and encode it into a string. it then attaches this string to outgoing response as cookie that should be stored on user's browser.
+
+Hashing Algorithms
+    takes a string and spits out a "random" series of number and letters
+    ex: sha256 calculator
+    one character change to input results in vastly different output
+    can not decipher by just reversing
+
+Rainbow Table Attack
+    malicious user gets list of common passwords and computes the respective hash for each of them
+
+Salting Passwords
+    adding an extra randomly generated string of characters to each password, different for each user

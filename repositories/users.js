@@ -1,5 +1,9 @@
 const fs = require('fs');
 const crypto = require('crypto');
+const util = require('util');
+
+// calling promisify on scrypt allows us to avoid using callback functions in later code (ex: create())
+const scrypt = util.promisify(crypto.scrypt);
 
 class UsersRepository {
     constructor(filename) {
@@ -27,19 +31,50 @@ class UsersRepository {
     }
 
     async create(attrs) {
+        // attrs = { email: '', password: ''}
         // generate random Id for each user
         attrs.id = this.randomId();
 
+        // generate salt
+        const salt = crypto.randomBytes(8).toString('hex');
+
+        // generate hashed password + salt using util.promisified scrypt
+        const buf = await scrypt(attrs.password, salt, 64);
+
         // call existing users.json file
         const records = await this.getAll();
-        // push new user attributes to users.json array
-        records.push(attrs);
+        const record = {
+            // ... syntax writes copies existing attr properties to new object and then overwrites properties specified afterwards
+            ...attrs,
+            // the '.' delineates where hashed password ends and salt begins
+            password: `${buf.toString('hex')}.${salt}`
+        };
+        // push new user attributes w/ hashed + salted pw to users.json array
+        records.push(record);
 
-         // write updated 'records'array back to this.filename using writeAll func
+         // write updated 'records' array back to this.filename using writeAll func
         await this.writeAll(records);
 
-        // whenever we call create(), we will return an attrs object that contains the id of the user we just made
-        return attrs;
+        // whenever we call create(), we will return the record object that contains the id of the user we just made and the hashed + salted pw
+        return record;
+    }
+
+    async comparePasswords(saved, supplied) {
+        // saved -> password saved in database. 'hashed.salt'
+        // supplied -> password submitted by user signing in.
+
+        // // result will be an array with two strings inside. [hashed password, result]
+        // const result = saved.split('.');
+        // const hashed = result[0];
+        // const salt = result[1];
+
+        // this line of code is identical to the three above, but cleaner
+        const [hashed, salt] = saved.split('.');
+
+        const hashedSuppliedBuf = await scrypt(supplied, salt, 64);
+
+        // returns true or false
+        return hashed === hashedSuppliedBuf.toString('hex');
     }
 
     async writeAll(records) {
