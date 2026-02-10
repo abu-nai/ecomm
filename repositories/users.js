@@ -37,6 +37,9 @@ class UsersRepository {
 
          // write updated 'records'array back to this.filename using writeAll func
         await this.writeAll(records);
+
+        // whenever we call create(), we will return an attrs object that contains the id of the user we just made
+        return attrs;
     }
 
     async writeAll(records) {

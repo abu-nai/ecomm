@@ -1,7 +1,16 @@
 [
-    {
-        "email": "test@test.com",
-        "password": "puppy",
-        "passwordConfirmation": "puppy"
-    }
+  {
+    "email": "test@test.com",
+    "password": "puppy"
+  },
+  {
+    "email": "eepy@sleepy.com",
+    "password": "pleasework",
+    "id": "0563ef30"
+  },
+  {
+    "email": "pluto@imacat.com",
+    "password": "notadog",
+    "id": "d489dc1d"
+  }
 ]
