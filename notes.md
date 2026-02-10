@@ -159,3 +159,17 @@ Crypto Module
         or synchronously w/o callback
         returns buffer
             use .toString('hex') to return in string hex format
+
+
+Authentication
+    Being able to sign-up or log-in to anything revolves around the server being able to identify who is making requests to the server.
+    Cookies are used to identify who is making requests.
+    Cookie contains some identifying info inside ENCRYPTED FORMAT. Users should never exchange cookies!
+    Cookies are unique for each domain.
+
+    cookieSession library
+        automatically encrypts cookies for us using the encryption key we establish in app.use
+
+        adds on 'req.session' property to our req object
+            req.session is an object that we can add properties to
+            whenever we call res.send, cookieSession library will look at req.session object for any info changed and encode it into a string. it then attaches this string to outgoing response as cookie that should be stored on user's browser.
