@@ -185,3 +185,5 @@ Rainbow Table Attack
 
 Salting Passwords
     adding an extra randomly generated string of characters to each password, different for each user
+
+SUBROUTER - essentially the same kind of router that is built in the app we created, but we can create a separate router in auth.js, export it, then require it into index.js and link it up to app.
