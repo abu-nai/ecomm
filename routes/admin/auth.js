@@ -6,7 +6,7 @@ const { check, validationResult } = require('express-validator');
 const usersRepo = require('../../repositories/users');
 const signupTemplate = require('../../views/admin/auth/signup');
 const signinTemplate = require('../../views/admin/auth/signin');
-const { requireEmail, passwordConfirm, requirePassword } = require('./validators');
+const { requireEmail, passwordConfirm, requirePassword, requireEmailExists, requireValidPasswordforUser } = require('./validators');
 
 // router is essentially an object that will keep track of all of the route handlers we set up. can be linked to app in index.js file.
 const router = express.Router();
@@ -23,7 +23,11 @@ router.post('/signup',
     ],
     async (req, res) => {
         const errors = validationResult(req);
-        console.log(errors);
+
+        // check if errors occurred
+        if (!errors.isEmpty()) {
+            return res.send(signupTemplate({ req, errors }));
+        }
 
         // destructure info from req.body into variables
         const { email, password, passwordConfirmation } = req.body;
@@ -48,23 +52,16 @@ router.get('/signin', (req, res) => {
     res.send(signinTemplate());
 });
 
-router.post('/signin', async (req, res) => {
-    const { email, password } = req.body;
+router.post('/signin', [
+    requireEmailExists,
+    requireValidPasswordforUser
+], async (req, res) => {
+    const errors = validationResult(req);
+    console.log(errors);
+
+    const { email } = req.body;
 
     const user = await usersRepo.getOneBy({ email });
-
-    if (!user) {
-        return res.send('Email not found');
-    }
-
-    const validPassword = await usersRepo.comparePasswords(
-        user.password,
-        password
-    )
-
-    if (!validPassword) {
-        return res.send('Invalid password');
-    }
 
     // this authenticates user
     req.session.userId = user.id;
