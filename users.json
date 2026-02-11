@@ -1,31 +1,6 @@
 [
   {
     "email": "pluto@imacat.com",
-    "password": "notadog",
-    "id": "e90eff87"
-  },
-  {
-    "email": "fern@imacat.com",
-    "password": "imacattoo",
-    "id": "9aba201c"
-  },
-  {
-    "email": "test5@test.com",
-    "password": "27961991f90cf2f5ef02bf094058c926a56e442fe9317b864b8cf488574469cf686ad1f4c13e89c5b92076440d64fec2ff18043bb25dd3b746aaef11fd0915bd.8cb6d056e5c00b2d",
-    "id": "9e69f962"
-  },
-  {
-    "email": "jadeisababy@googoo.com",
-    "password": "c863b3b07f2228aed316e47f0a33e48b69292fe02c55f139bb1a628022345566a9ea4b390cf9b61eac36c2d01583567503deee02b80a4cc65c0a2d68e349af22.03ec8644f7a514fb",
-    "id": "38c47e10"
-  },
-  {
-    "email": "pluto@imacat.com",
-    "password": "7e0ac455d79f3024af180ba86147f83cb5209004c203978220c72c8c5cd6e0b1773fdada8cd7a995ea0da2ff1be05ea97ccc4f074f0ab4f08114ed6a9b7e3dbe.49b73874e53b9c44",
-    "id": "bb25bb51"
-  },
-  {
-    "email": "pluto@imacat.com",
     "password": "ef2f8d1fdfd2f86f37b77faaf20edae686d84c4208b9eb21edd397bb87cca55292260dde59daf231b615914cece99c057655ea7bdd547fcc526cad1812bec2b6.1b9e413d09ff3f7b",
     "id": "1108ca8f"
   },
@@ -33,5 +8,10 @@
     "email": "jeeves@imadog.com",
     "password": "1a11868be317dcfac5172abdbef597c8015197fa481972659aa6e9fa84de46423975c3e6506630e46b68f620000e6448c6027c688889341965f6462b6a337c7c.a2b7dc1beba5df33",
     "id": "028a0d88"
+  },
+  {
+    "email": "fern@imacat.com",
+    "password": "6234a860ddb3088d758be855c41f3bced80e1eec6ba8753727e2e3b6439c09df4fe70b182a4b5a0c6d76ab501d7b914da9f60e3efc20a4a4fdf3f4e4c387959e.5882c8cf3aa2a496",
+    "id": "aaa28d3f"
   }
 ]
