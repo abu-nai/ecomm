@@ -187,3 +187,24 @@ Salting Passwords
     adding an extra randomly generated string of characters to each password, different for each user
 
 SUBROUTER - essentially the same kind of router that is built in the app we created, but we can create a separate router in auth.js, export it, then require it into index.js and link it up to app.
+
+Express-Validator library
+    Middleware for express.js
+    *reminder* ctrl c to exit program, then install library, then run "npm run dev" to restart
+    Results from Express-Validator methods are returned to the req object
+    
+    Validation
+        Goal: check that user input matches information we have
+        Validators (ValidatorJS) can be chained on to check()
+
+    Sanitization
+        Goal: massage/change the income value that a user has provided
+        Example: .trim() to remove accidental leading/trailing spaces or some other unintentional characters
+        Example: Standardise an incoming email
+        Typically sanitize before validating.
+
+Custom Validators
+    Custom function we will add to validation change.
+    Runs custom validation logic.
+    Throws errors that Express Validator will interpret.
+    .custom()

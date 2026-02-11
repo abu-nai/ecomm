@@ -1,8 +1,12 @@
 const express = require('express');
+// destructure off the functions we care about
+const { check, validationResult } = require('express-validator');
+
 // whenever we require in a file that we wrote, we must provide a relative path from our current file to the file we want access to
 const usersRepo = require('../../repositories/users');
 const signupTemplate = require('../../views/admin/auth/signup');
 const signinTemplate = require('../../views/admin/auth/signin');
+const { requireEmail, passwordConfirm, requirePassword } = require('./validators');
 
 // router is essentially an object that will keep track of all of the route handlers we set up. can be linked to app in index.js file.
 const router = express.Router();
@@ -11,28 +15,28 @@ router.get('/signup', (req, res) => {
     res.send(signupTemplate({ req }));
 });
 
-router.post('/signup', async (req, res) => {
-    // destructure info from req.body into variables
-    const { email, password, passwordConfirmation } = req.body;
+router.post('/signup', 
+    [
+        requireEmail, 
+        requirePassword,
+        passwordConfirm
+    ],
+    async (req, res) => {
+        const errors = validationResult(req);
+        console.log(errors);
 
-    // can condense object values since key and value are the same
-    const existingUser = await usersRepo.getOneBy({ email });
-    if (existingUser) {
-        return res.send('Email in use');
+        // destructure info from req.body into variables
+        const { email, password, passwordConfirmation } = req.body;
+
+        // Create a user in our user repo to represent this person
+        const user = await usersRepo.create({email, password}); 
+
+        // Store the id of that user inside the user's cookie
+        req.session.userId = user.id;
+
+        res.send('Account created!!!');
     }
-
-    if (password !== passwordConfirmation) {
-        return res.send('Passwords must match');
-    }
-
-    // Create a user in our user repo to represent this person
-    const user = await usersRepo.create({email, password}); 
-
-    // Store the id of that user inside the user's cookie
-    req.session.userId = user.id;
-
-    res.send('Account created!!!');
-});
+);
 
 router.get('/signout', (req, res) => {
     // to sign out, clear cookie
