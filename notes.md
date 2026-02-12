@@ -208,3 +208,9 @@ Custom Validators
     Runs custom validation logic.
     Throws errors that Express Validator will interpret.
     .custom()
+
+Public
+    Files that are intended to be executed by the browser
+
+Object Oriented Approach
+    Parent Class
