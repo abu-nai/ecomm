@@ -60,7 +60,7 @@ module.exports = class Repository {
         const filteredRecords = records.filter(record => record.id !== id);
         await this.writeAll(filteredRecords);
     }
-
+    
     async update(id, attrs) {
         const records = await this.getAll();
         // iterate through records to find the one that matches our id

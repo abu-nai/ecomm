@@ -5,6 +5,7 @@ const { handleErrors, requireAuth } = require('./middlewares');
 const productsRepo = require('../../repositories/products');
 const productsNewTemplate = require('../../views/admin/products/new');
 const productsIndexTemplate = require('../../views/admin/products/index');
+const productsEditTemplate = require('../../views/admin/products/edit');
 const { requireTitle, requirePrice } = require('./validators');
 const middlewares = require('./middlewares');
 
@@ -40,7 +41,46 @@ router.post('/admin/products/new',
     // });
 
     res.redirect('/admin/products');
-})
+});
+
+// edit product page
+router.get('/admin/products/:id/edit',
+    requireAuth, 
+    async (req, res) => {
+        const product = await productsRepo.getOne(req.params.id);
+
+        if (!product) {
+            return res.send('We couldn\'t find that one!');
+        }
+
+        res.send(productsEditTemplate({ product }));
+});
+
+router.post('/admin/products/:id/edit',
+    requireAuth, 
+    upload.single('image'),
+    [requireTitle, requirePrice],
+    handleErrors(productsEditTemplate, async (req) => {
+        const product = await productsRepo.getOne(req.params.id);
+        return { product };
+    }),
+    async (req, res) => {
+        // changes will represent altered information in our product
+        const changes = req.body;
+
+        // if our request object contains a file upload
+        if (req.file) {
+            changes.image = req.file.buffer.toString('base64');
+        }
+
+        try {
+            await productsRepo.update(req.params.id, changes)
+        } catch (err) {
+            return res.send('Could not find that item!');
+        }
+
+        res.redirect('/admin/products');
+});
 
 module.exports = router;
 
