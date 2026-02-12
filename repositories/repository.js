@@ -31,7 +31,7 @@ module.exports = class Repository {
 
     async getAll() {
         // Open the file called this.filename (really the file that it's pointing to)
-        // Parse the contents because the contents of our file are thusfar a STRING that contains the array contents and not an actual array
+        // Parse the contents because the contents of our file are thus far a STRING that contains the array contents and not an actual array
         // Return the parsed data
         return JSON.parse(await fs.promises.readFile(this.filename, { encoding: 'utf8' }));
     }

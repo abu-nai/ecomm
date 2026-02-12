@@ -276,5 +276,9 @@ Presigned URL (Stephen's first choice)
     upload the FILE directly into outside data sfore.
     Browser ends up doing the least work in this method.
 
+Requiring Authentication
+    req.session is an object that eventually gets stored on the user's cookie. if the user is signed in, we will see req.session.userId on all follow-up requests.
+    
+
 
 
