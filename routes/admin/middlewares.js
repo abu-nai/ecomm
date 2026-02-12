@@ -3,12 +3,22 @@ const { validationResult } = require('express-validator');
 // we return a function because all middlewares must be functions
 // we take a templateFunc as an arg because we want to customise the middleware for each function and render a different template for each place an error can occur
 module.exports = {
-    handleErrors(templateFunc) {
-        return (req, res, next) => {
+    handleErrors(templateFunc, dataCallBack) {
+        return async (req, res, next) => {
             const errors = validationResult(req);
 
             if (!errors.isEmpty()) {
-                return res.send(templateFunc({ errors }))
+                // initialise data object variable outside of inner if statement so that it's accessible
+                // default to empty object to avoid submitting undefined later
+                let data = {};
+
+                // since dataCallBack is an optional arg, we need to check if it was provided first.
+                if (dataCallBack) {
+                    data = await dataCallBack(req);
+                }
+
+                // ...data says take keys and values inside data object and merge with this object
+                return res.send(templateFunc({ errors, ...data }));
             }
 
             next();
