@@ -284,3 +284,8 @@ ids in URLs
     router.get('/admin/products/:id/edit')
     Whenever a request comes into the above path, any string of characters in ":id" will be received as a variable on the request object.
     Inside out route handler, we can reference our req object and see what id was provided using 'req.params.id'.
+
+Form Elements
+    Only support GET and POST requests as means of submission.
+    Deleting is a POST request.
+    the "action" attribute specifies the URL that we're going to make the POST request to.
