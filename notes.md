@@ -7,7 +7,7 @@ Project Objectives:
 
     inspect request to see what user is looking for
 
-    generate HTML and sent back to browser
+    generate HTML and send back to browser
 
     build out file-based data store
 
@@ -45,8 +45,8 @@ General Notes
                     'POST'
                 associated with getting record of some kind
                 information is not displayed in URL and is instead located in REQUEST BODY property
-        for hosts other than localhost (most any website), OS then reaches out to some nerwork device (DNS server) to get IP address
-        once DNS server returns IP address, OS will send a second request to that web server and eventually get a response back
+        for hosts other than localhost (most any website), OS then reaches out to some network device (DNS server) to get IP address.
+        once DNS server returns IP address, OS will send a second request to that web server and eventually get a response back.
 
         for localhost, OS handles request on its own since it hosts the server.
         OS will look at port in request.
@@ -133,7 +133,7 @@ Why WOULDN'T we want to use a data store that stores information on our hard dri
 
 Data Store
     Will take the form of multiple classes that have their own collection of objects
-    We call this classes REPOSITORIES
+    We call these classes REPOSITORIES
 
 Approaches for Managing Data
     Reposity Approach
@@ -214,3 +214,67 @@ Public
 
 Object Oriented Approach
     Parent Class
+
+Understanding Multi-Part Forms
+    Method value indicates HOW information is going to be communicated to the backend server.
+
+    Default value for method for a form is GET.
+        Browser will take all of the information of the form, add it into the URL of the request, and make the request to the backend server with that URL.
+
+    Must indicate method="POST" if necessary.
+        Browser will take all of the information of the form, stick it into the body of a post-request (req.body), and then make that request to the backend server.
+        Network > Click on request > Headers > Form Data contains all of the information in the body of the request
+    
+    enctype=""
+        Stands for "encoding type".
+        Describes how to take information out of the form and get it ready to be transmitted.
+
+        Default value is "application/x-www-form-urlencoded"
+            Take all the information out of the form (specifically the inputs), look at the name properties of each input, take a look at the values of each, and put them together in a query string format.
+
+            Under Form Data, click "view source" to see what information is actually being transmitted as.
+
+            When using an input with type "file", we may have files that have data inside them that can not be turned into a string and thus, can not be transmitted safely or efficiently using URL encoding scheme.
+    
+    enctype="multipart/form-data"
+        Can handle raw data for file inputs.
+
+        Separately sends each input.
+
+        Chrome will not longer try to parse and show information in post-request Form Data. This is for performance concerns.
+
+        Content-Type under Request Header section will tell the server about the format of data it's about to receive. "boundary" property is a string that describes what is separating all the fields inside of our form.
+
+Multer middleware
+    Will take care of images/files uploaded.
+    Will also parse different text fields inside of the post-request body!
+    req.file is an object that has the diffent properties of the image file that was uploaded.
+    the raw image data is located in req.file.buffer.
+    converting to base64 will allow the image information to be safely encoded in a string
+
+
+Optional Lecture: Different Methods of Image Storage
+
+    Scalability
+        Load Balancers are servers whose sole responsibility is to take incoming requests and randomly forward them to one of a number of servers.
+
+Local Hard Drive (Co-Located Disk)
+    Generally a bad idea unless you KNOW there will only be one server running.
+
+Database
+    Generally expensive.
+
+Outside Data Store for Files
+    Generally requires that server has some extra oopmh?
+
+Presigned URL (Stephen's first choice)
+    Seems more Dev Ops than Eng. Cost effective, but requires extra set up.
+    Outside Data Store holds files.
+    Browser sends initial request to server through Load Balancer to upload file.
+    Server sends presignedURL back to browser.
+    Presigned URL has configuration stuffed into it and gives browser permission to 
+    upload the FILE directly into outside data sfore.
+    Browser ends up doing the least work in this method.
+
+
+
