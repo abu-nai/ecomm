@@ -31,7 +31,7 @@ router.post('/signup',
         // Store the id of that user inside the user's cookie
         req.session.userId = user.id;
 
-        res.send('Account created!!!');
+        res.redirect('/admin/products');
     }
 );
 
@@ -57,7 +57,7 @@ router.post('/signin',
         // this authenticates user
         req.session.userId = user.id;
 
-        res.send('You are signed in!');
+        res.redirect('/admin/products');
     });
 
 // make all of our route handlers available to other files in the project
