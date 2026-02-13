@@ -289,3 +289,18 @@ Form Elements
     Only support GET and POST requests as means of submission.
     Deleting is a POST request.
     the "action" attribute specifies the URL that we're going to make the POST request to.
+
+Cart
+    req.session.cartId
+        req.session is managed by cookieSession.
+        existence of req.session.cartId indicates that a specific user has been detected.
+    req.body.productId
+
+Corner Cases for Carts Repo
+    1- When user adds to cart for first time 
+        No existing cart for that id
+    2- When user adds item to existing cart
+        Must go through carts repo and find existing id.
+    3- Does the item in the cart already exist at least once?
+    4- Or are we adding in a fresh, new product to cart?
+        Must add new product to items array.
